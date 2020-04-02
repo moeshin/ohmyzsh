@@ -204,7 +204,12 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue $CURRENT_FG '%~'
+  if [[ -n "$PREFIX" ]] && [[ "$PWD" =~ "^$PREFIX" ]]; then
+    dir="\$${PWD:${#PREFIX}}"
+  else
+    dir='%~'
+  fi
+  prompt_segment blue $CURRENT_FG "$dir"
 }
 
 # Virtualenv: current working virtualenv
